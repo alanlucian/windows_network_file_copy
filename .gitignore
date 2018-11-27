@@ -61,3 +61,4 @@ typings/
 .next
 bin/tms_simulator.json
 bin/netUpdater.exe
+package-lock.json
