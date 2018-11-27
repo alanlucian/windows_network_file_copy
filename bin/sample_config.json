@@ -1,0 +1,15 @@
+{
+    "origin":"\"E:\\repos\\networkUpdater\"",
+    "globalAuth":{"user":"administrator","pwd":"\"\""},
+    "globalPath":"\\c\\netWorkUpdate",
+    "globalBkpPath":"\\c\\netWorkUpdate_BKP",
+    "destiny":[
+        {
+            "ip":"127.0.0.1",
+            "path":"\\c\\netWorkUpdate",
+            "bkpPath":"\\c\\netWorkUpdate_BKP"
+        },
+        {"ip":"127.0.0.2"}
+    ]
+    
+}

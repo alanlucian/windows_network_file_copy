@@ -1,17 +1,19 @@
 const path = require('path');
 var fs = require('fs');
-var networkData = JSON.parse(fs.readFileSync('network.json', 'utf8'));
-//const networkData = require('./network.json');
+
+const minimist = require('minimist');
+var args = minimist(process.argv.slice(2), {  
+    alias: {
+        f: 'file'	
+    }
+});
+
+var networkData = JSON.parse(fs.readFileSync(args.file, 'utf8'));
 
 var cmd=require('node-cmd');
 
 const now = new Date();
 const BKP_TIMESTAMP =  `${now.getFullYear()}${now.getMonth()}${now.getDate()}_${now.getHours()}${now.getMinutes()}${now.getSeconds()}` ;
-
-// const IGNORE_FILE = __dirname + path.sep + 'ignore.txt'
-
-
-
 
 cmd.get('net use',(err, data, stderr)=>{
     //console.log(err, data, stderr);
@@ -52,6 +54,10 @@ for( var i = 0 ; i < networkData.destiny.length ;  i++  ){
                     }else{
                         completeCopyCount++;
                         console.log( `Cópia para ${copyToPath} concluída ( ${completeCopyCount} / ${networkData.destiny.length} )`  )
+
+                        if(completeCopyCount == networkData.destiny.length){
+                            console.log( 'ROTINA de Cópia com BK Concluída')
+                        }
                     }
                     
                 }
