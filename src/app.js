@@ -16,6 +16,7 @@ if( typeof args.file == 'undefined'){
 }
 var networkData = JSON.parse(fs.readFileSync(args.file, 'utf8'));
 const startDate = new Date();
+
 const BKP_TIMESTAMP =  `${startDate.getFullYear()}${_n(startDate.getMonth())}${_n(startDate.getDate())}_${_n(startDate.getHours())}${_n(startDate.getMinutes())}${_n(startDate.getSeconds())}` ;
 
 console.log('Bkp folder sufix timestamp ' , BKP_TIMESTAMP);
