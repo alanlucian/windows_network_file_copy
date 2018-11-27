@@ -1,4 +1,5 @@
 const path = require('path');
+var cmd = require('node-cmd');
 var fs = require('fs');
 
 const minimist = require('minimist');
@@ -10,10 +11,10 @@ var args = minimist(process.argv.slice(2), {
 
 var networkData = JSON.parse(fs.readFileSync(args.file, 'utf8'));
 
-var cmd=require('node-cmd');
+const startDate = new Date();
+const BKP_TIMESTAMP =  `${startDate.getFullYear()}${startDate.getMonth()}${startDate.getDate()}_${startDate.getHours()}${startDate.getMinutes()}${startDate.getSeconds()}` ;
 
-const now = new Date();
-const BKP_TIMESTAMP =  `${now.getFullYear()}${now.getMonth()}${now.getDate()}_${now.getHours()}${now.getMinutes()}${now.getSeconds()}` ;
+console.log('Bkp folder sufix timestamp ' , BKP_TIMESTAMP);
 
 cmd.get('net use',(err, data, stderr)=>{
     //console.log(err, data, stderr);
@@ -38,14 +39,14 @@ for( var i = 0 ; i < networkData.destiny.length ;  i++  ){
         //var moveCmd = `xcopy  ${copyToPath}${path.sep}*  ${bkpFolder}\\ `; WORK NO DIR
         var bkpCmd = `xcopy  ${copyToPath}  ${bkpFolder}  /Z /Y /S /J`;
         
-        console.log( `Executando BKP [${bkpCmd}]` );
+        console.log( `Running BKP [${bkpCmd}]` );
         cmd.get(bkpCmd, (err, data, stderr)=>{
             if( err != null){
                 console.log('>>>',err,data,stderr);
                 return;
             }
             var copyCmd = authCmd +  "xcopy "+ networkData.origin +" " + copyToPath + " /Z /Y /S /J";
-            console.log( `Executando Cópia [${copyCmd}]` );
+            console.log( `Running Cópia [${copyCmd}]` );
             cmd.get(
                 copyCmd,
                 function(err, data, stderr){
@@ -53,10 +54,17 @@ for( var i = 0 ; i < networkData.destiny.length ;  i++  ){
                         console.log("!ERR!\n\n\t",err, data, stderr)
                     }else{
                         completeCopyCount++;
-                        console.log( `Cópia para ${copyToPath} concluída ( ${completeCopyCount} / ${networkData.destiny.length} )`  )
+                        console.log( `COPY TO ${copyToPath} DONE ( ${completeCopyCount} / ${networkData.destiny.length} )`  )
 
                         if(completeCopyCount == networkData.destiny.length){
-                            console.log( 'ROTINA de Cópia com BK Concluída')
+                            let now = new Date();
+                            
+                            var timeDiff = Math.abs(now.getTime() - startDate.getTime());
+                            var diffSeconds = Math.ceil(timeDiff / (1000)); 
+
+                            console.log("\n#### DONE");
+                            console.log('BKP folder sufix used: ' , BKP_TIMESTAMP);
+                            console.log( `Process done in ${diffSeconds} seconds` )
                         }
                     }
                     
@@ -69,5 +77,5 @@ for( var i = 0 ; i < networkData.destiny.length ;  i++  ){
 
 }
 
-console.log(BKP_TIMESTAMP);
+
 
