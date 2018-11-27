@@ -2,6 +2,7 @@
 ### Parâmetros do executável
 - -f config json file
 
+If none was given netConfig.json on same path of the execution will be fetched
 
 > NOTE: windows path is very tricky pay attention on escaping bars
 

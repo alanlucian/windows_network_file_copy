@@ -7,7 +7,7 @@
         {
             "type": "node",
             "request": "launch",
-            "args": [ "-f", "${workspaceFolder}\\bin\\tms_simulator.json"],
+            "args": [ "-f", "${workspaceFolder}\\bin\\netConfig.json"],
             "name": "Launch Program",
             "program": "${workspaceFolder}/src\\app.js"
         }

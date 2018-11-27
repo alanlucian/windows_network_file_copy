@@ -2,6 +2,8 @@ const path = require('path');
 var cmd = require('node-cmd');
 var fs = require('fs');
 
+const _n = ( n )=>{ return n<10? '0'+n.toString():n.toString(); }
+
 const minimist = require('minimist');
 var args = minimist(process.argv.slice(2), {  
     alias: {
@@ -9,10 +11,12 @@ var args = minimist(process.argv.slice(2), {
     }
 });
 
+if( typeof args.file == 'undefined'){
+    args.file = './netConfig.json';
+}
 var networkData = JSON.parse(fs.readFileSync(args.file, 'utf8'));
-
 const startDate = new Date();
-const BKP_TIMESTAMP =  `${startDate.getFullYear()}${startDate.getMonth()}${startDate.getDate()}_${startDate.getHours()}${startDate.getMinutes()}${startDate.getSeconds()}` ;
+const BKP_TIMESTAMP =  `${startDate.getFullYear()}${_n(startDate.getMonth())}${_n(startDate.getDate())}_${_n(startDate.getHours())}${_n(startDate.getMinutes())}${_n(startDate.getSeconds())}` ;
 
 console.log('Bkp folder sufix timestamp ' , BKP_TIMESTAMP);
 
